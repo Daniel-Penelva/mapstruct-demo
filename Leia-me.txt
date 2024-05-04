@@ -1,0 +1,2 @@
+Site de instalação Mapper:
+https://mapstruct.org/documentation/installation/
