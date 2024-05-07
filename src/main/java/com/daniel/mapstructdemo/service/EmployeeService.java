@@ -1,6 +1,8 @@
 package com.daniel.mapstructdemo.service;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -17,11 +19,29 @@ public class EmployeeService {
 
     private EmployeeRepository employeeRepository;
 
+    // Criar empregado
     public Employee saveEmployee(EmployeeDto employeeDto) {
 
         Employee employee = EmployeePopulator.INSTANCE.populateEmployee(employeeDto);
         employee.setCreationDate(new Date());
         return employeeRepository.save(employee);
+    }
+
+
+    // Buscar todos os empregados
+    public List<EmployeeDto> findAllEmployee() {
+        return EmployeePopulator.INSTANCE.findAllEmployeeDtos(employeeRepository.findAll());
+    }
+
+
+    // Buscar empregado por id
+    public EmployeeDto findByIdEmployee(Integer idEmployee){
+        Optional<Employee> optionalEmployee = employeeRepository.findById(idEmployee);
+        if(optionalEmployee.isPresent()){
+            return EmployeePopulator.INSTANCE.findByIdEmployeeDto(idEmployee, optionalEmployee.get());
+        }else{
+            throw new RuntimeException("Employee not found.");
+        }
     }
 
 }

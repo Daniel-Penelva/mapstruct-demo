@@ -1,7 +1,11 @@
 package com.daniel.mapstructdemo.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +28,18 @@ public class EmployeeController {
     @PostMapping("/add")
     public ResponseEntity<Employee> create(@RequestBody EmployeeDto employeeDto) {
         return new ResponseEntity<>(employeeService.saveEmployee(employeeDto), HttpStatus.CREATED);
+    }
+
+    // http://localhost:8081/employee/all
+    @GetMapping("/all")
+    public ResponseEntity<List<EmployeeDto>> findAllEmployee() {
+        return new ResponseEntity<>(employeeService.findAllEmployee(), HttpStatus.OK);
+    }
+
+    // http://localhost:8081/employee/by/{id}
+    @GetMapping("/by/{id}")
+    public ResponseEntity<EmployeeDto> findByIdEmployee(@PathVariable("id") Integer idEmployee) {
+        return new ResponseEntity<>(employeeService.findByIdEmployee(idEmployee), HttpStatus.OK);
     }
 
 }
