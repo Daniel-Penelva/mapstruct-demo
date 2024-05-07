@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,6 +54,14 @@ public class EmployeeController {
         } else {
             return ResponseEntity.notFound().build(); // Retorna 404 se o funcionário não for encontrado
         }
+    }
+
+
+    // http://localhost:8081/employee/delete/{id}
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteEmployeeById(@PathVariable("id") Integer idEmployee) {
+        employeeService.deleteEmployeeById(idEmployee);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

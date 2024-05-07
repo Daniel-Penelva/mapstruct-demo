@@ -35,6 +35,11 @@ public interface EmployeePopulator {
     @Mapping(target = "creationDate", ignore = true)
     void updateEmployeeFromDto(EmployeeDto employeeDto, @MappingTarget Employee employee);
 
+
+    @Mapping(target = "id", ignore = true)                                              
+    @Mapping(target = "creationDate", ignore = true)
+    Employee deleteEmployee(EmployeeDto employeeDto);
+
 }
 
 /*Bom Saber:

@@ -56,4 +56,10 @@ public class EmployeeService {
         }
     }
 
+    // Deletar empregado
+    public void deleteEmployeeById(Integer idEmployee) {
+        Optional<Employee> optionalEmployee = employeeRepository.findById(idEmployee);
+        optionalEmployee.ifPresent(employeeRepository::delete);
+    }
+    
 }
