@@ -27,18 +27,30 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
-
     // Buscar todos os empregados
     public List<EmployeeDto> findAllEmployee() {
         return EmployeePopulator.INSTANCE.findAllEmployeeDtos(employeeRepository.findAll());
     }
 
-
     // Buscar empregado por id
-    public EmployeeDto findByIdEmployee(Integer idEmployee){
+    public EmployeeDto findByIdEmployee(Integer idEmployee) {
         Optional<Employee> optionalEmployee = employeeRepository.findById(idEmployee);
-        if(optionalEmployee.isPresent()){
+        if (optionalEmployee.isPresent()) {
             return EmployeePopulator.INSTANCE.findByIdEmployeeDto(idEmployee, optionalEmployee.get());
+        } else {
+            throw new RuntimeException("Employee not found.");
+        }
+    }
+
+    // Atualizar empregado por id
+    public EmployeeDto updateEmployeeById(Integer idEmployee, EmployeeDto employeeDto){
+        Optional<Employee> optionalEmployee = employeeRepository.findById(idEmployee);
+        if (optionalEmployee.isPresent()) {
+            Employee employee = optionalEmployee.get();
+            EmployeePopulator.INSTANCE.updateEmployeeFromDto(employeeDto, employee);
+            employee.setCreationDate(new Date());                                        // Atualizar a data de criação, se necessário
+            employeeRepository.save(employee);
+            return EmployeePopulator.INSTANCE.findByIdEmployeeDto(idEmployee, employee); // Retorna o objeto atualizado
         }else{
             throw new RuntimeException("Employee not found.");
         }

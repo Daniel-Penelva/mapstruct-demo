@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 
 import com.daniel.mapstructdemo.dto.EmployeeDto;
@@ -70,6 +71,21 @@ public class EmployeePopulatorImpl implements EmployeePopulator {
         employeeDto.setProjectId(employee.getProjectId());
 
         return employeeDto;
+    }
+
+    // Atualizar empregado
+    @Override
+    @Named("updateEmployeeFromDto")
+    public void updateEmployeeFromDto(EmployeeDto employeeDto, @MappingTarget Employee employee) {
+        
+        if (employeeDto == null || employee == null) {
+            return;
+        }
+
+        employee.setName(employeeDto.getName());
+        employee.setAge(employeeDto.getAge());
+        employee.setEmailAddress(employeeDto.getEmailAddress());
+        employee.setProjectId(employeeDto.getProjectId());
     }
 
 }

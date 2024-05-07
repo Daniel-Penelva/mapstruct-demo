@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
 import com.daniel.mapstructdemo.dto.EmployeeDto;
@@ -28,7 +29,12 @@ public interface EmployeePopulator {
     // Convertendo de uma entidade (Entity) para um objeto DTO (Data Transfer Object) - gerar um dto para o usuario
     @Mapping(target = "id", ignore = true)
     EmployeeDto findByIdEmployeeDto(Integer idEmployee, Employee employee);
-    
+
+
+    @Mapping(target = "id", ignore = true)                                              
+    @Mapping(target = "creationDate", ignore = true)
+    void updateEmployeeFromDto(EmployeeDto employeeDto, @MappingTarget Employee employee);
+
 }
 
 /*Bom Saber:

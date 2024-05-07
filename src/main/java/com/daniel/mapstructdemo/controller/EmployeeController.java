@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,6 +41,18 @@ public class EmployeeController {
     @GetMapping("/by/{id}")
     public ResponseEntity<EmployeeDto> findByIdEmployee(@PathVariable("id") Integer idEmployee) {
         return new ResponseEntity<>(employeeService.findByIdEmployee(idEmployee), HttpStatus.OK);
+    }
+
+
+    // http://localhost:8081/employee/replace/{id}
+    @PutMapping("/replace/{id}")
+    public ResponseEntity<EmployeeDto> updateEmployeeById(@PathVariable("id") Integer idEmployee, @RequestBody EmployeeDto employeeDto){
+        EmployeeDto updatedEmployee = employeeService.updateEmployeeById(idEmployee, employeeDto);
+        if (updatedEmployee != null) {
+            return ResponseEntity.ok(updatedEmployee); // Retorna o funcionário atualizado se a atualização for bem-sucedida
+        } else {
+            return ResponseEntity.notFound().build(); // Retorna 404 se o funcionário não for encontrado
+        }
     }
 
 }
